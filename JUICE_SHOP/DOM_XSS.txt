@@ -1,0 +1,22 @@
+I solved DOM XSS challenge.It is very easy .
+When you searched anything on the search box theat text appear as a HEADING.
+
+
+I first tried the payload:
+<script>alert(1)</script>
+
+but it did not execute.
+Instead, it was displayed as text because the application inserted my input into the text content of a <span> element:
+
+
+<span id="searchValue">hi</span>
+Since the browser treats everything between the opening and closing <span> tags as plain text, 
+the <script> tag is not parsed or executed.
+
+Later, I identified a DOM XSS sink that parsed my input as HTML, allowing a payload such as:
+
+<iframe src="javascript:alert('xss')"></iframe>
+
+
+
+to execute.
